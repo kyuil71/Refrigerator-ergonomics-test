@@ -125,7 +125,7 @@
         const ChevronLeft = (p) => <IconWrapper {...p}><polyline points="15 18 9 12 15 6" /></IconWrapper>;
         const ChevronRight = (p) => <IconWrapper {...p}><polyline points="9 18 15 12 9 6" /></IconWrapper>;
 
-        // --- Data (Updated: Removed requested menus and features) ---
+        // --- Data ---
         const designConcepts = {
             exterior: [], 
             interior: [
@@ -136,9 +136,9 @@
 
         // --- Precise Ergonomics Simulator ---
         const ErgoSimulator = ({ distance, lookTargetY }) => {
-            const width = 200;
-            const height = 280;
-            const floorY = 260;
+            const width = 290;  
+            const height = 210; 
+            const floorY = 190; 
             const scale = 70; // 1m = 70px
             
             const fH = REAL_SPECS.fridgeHeight * scale;
@@ -204,11 +204,11 @@
                             <Ruler size={14} className="text-blue-600"/> Ergonomics Test
                         </span>
                         <span className="text-[10px] font-mono bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
-                            Dist: {physicalDist.toFixed(2)}m
+                            Dist: {distance.toFixed(2)}m
                         </span>
                     </div>
                     
-                    <svg width={width} height={height} className="overflow-visible">
+                    <svg width={width} height={height} className="overflow-visible mx-auto block">
                         <line x1="0" y1={floorY} x2={width} y2={floorY} stroke="#9ca3af" strokeWidth="2" />
                         <g>
                             <rect x={fX} y={floorY - fH} width={fD} height={fH} fill="#e2e8f0" stroke="#64748b" strokeWidth="2" rx="2" />
@@ -241,14 +241,15 @@
             const mountRef = useRef(null);
             const cameraRef = useRef(null);
             const fridgeRef = useRef(null);
-            const pivotYRef = useRef(null); // Added
-            const pivotXRef = useRef(null); // Added
+            const pivotYRef = useRef(null); 
+            const pivotXRef = useRef(null); 
             const doorGroupRef = useRef(null);
             const shelvesRef = useRef([]);
             const lightsRef = useRef({});
             
             const isOpenRef = useRef(isDoorOpen);
             const [zoom, setZoom] = useState(6); 
+            const orbitRotRef = useRef({ x: 0.1, y: 0.6 }); // State tracking for orbit rotation
 
             useEffect(() => { isOpenRef.current = isDoorOpen; }, [isDoorOpen]);
 
@@ -257,9 +258,22 @@
                     if (viewMode === 'orbit') {
                         cameraRef.current.position.set(0, 2, zoom);
                         cameraRef.current.lookAt(0, 1, 0); 
+                        // Restore orbit rotation when returning from 1st person
+                        if (pivotYRef.current) pivotYRef.current.rotation.y = orbitRotRef.current.y;
+                        if (pivotXRef.current) pivotXRef.current.rotation.x = orbitRotRef.current.x;
                     } else if (viewMode === 'firstPerson') {
+                        // Save orbit rotation before entering 1st person
+                        if (pivotYRef.current && pivotXRef.current) {
+                            orbitRotRef.current.y = pivotYRef.current.rotation.y;
+                            orbitRotRef.current.x = pivotXRef.current.rotation.x;
+                        }
+                        
                         cameraRef.current.position.set(personPos.x, REAL_SPECS.eyeLevel, personPos.z);
                         cameraRef.current.lookAt(0, personPos.lookY, 0); 
+                        
+                        // Reset rotation to straight for 1st person view
+                        if (pivotYRef.current) pivotYRef.current.rotation.y = 0;
+                        if (pivotXRef.current) pivotXRef.current.rotation.x = 0;
                     }
                 }
             }, [zoom, viewMode, personPos]);
@@ -270,6 +284,16 @@
                 const width = mountRef.current.clientWidth;
                 const height = mountRef.current.clientHeight;
                 const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+                
+                // 첫 로드 시 카메라 초기 상태 강제 적용
+                if (viewMode === 'orbit') {
+                    camera.position.set(0, 2, zoom);
+                    camera.lookAt(0, 1, 0); 
+                } else if (viewMode === 'firstPerson') {
+                    camera.position.set(personPos.x, REAL_SPECS.eyeLevel, personPos.z);
+                    camera.lookAt(0, personPos.lookY, 0); 
+                }
+                
                 cameraRef.current = camera;
                 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 renderer.setSize(width, height);
@@ -323,10 +347,12 @@
                 const pivotY = new THREE.Group();
                 scene.add(pivotY);
                 pivotYRef.current = pivotY;
+                pivotY.rotation.y = orbitRotRef.current.y; // Set initial viewing angle
 
                 const pivotX = new THREE.Group();
                 pivotY.add(pivotX);
                 pivotXRef.current = pivotX;
+                pivotX.rotation.x = orbitRotRef.current.x; // Set initial viewing angle
                 pivotX.add(fridgeGroup);
 
                 lightsRef.current.top = makeLight(0, h/2 - 0.05, 0);
@@ -385,6 +411,10 @@
                         pivotY.rotation.y += dx * 0.01;
                         pivotX.rotation.x += dy * 0.01;
                         pivotX.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, pivotX.rotation.x));
+                        
+                        // Sync Ref for view shifting
+                        orbitRotRef.current.y = pivotY.rotation.y;
+                        orbitRotRef.current.x = pivotX.rotation.x;
                     }
                     prevPos = { x: e.offsetX, y: e.offsetY };
                 };
@@ -460,6 +490,9 @@
                         // Clamp X rotation to avoid flipping upside down
                         pivotXRef.current.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, pivotXRef.current.rotation.x));
                     }
+                    // Sync Ref for view shifting
+                    orbitRotRef.current.y = pivotYRef.current.rotation.y;
+                    orbitRotRef.current.x = pivotXRef.current.rotation.x;
                 }
             };
 
@@ -490,19 +523,16 @@
                              </div>
                         </div>
                     )}
-                    
-                    {viewMode === 'firstPerson' && (
-                        <div className="absolute top-16 right-4 z-20 pointer-events-none">
-                            <ErgoSimulator distance={personPos.z} lookTargetY={personPos.lookY} />
-                        </div>
-                    )}
                 </div>
             );
         };
 
         const App = () => {
             const [activeFeatures, setActiveFeatures] = useState({ exterior: null, interior: null });
+            
+            // Set initial state matching requirements: open door initially
             const [isDoorOpen, setIsDoorOpen] = useState(false); // Initially closed for 3D View
+            
             const [shelfPositions, setShelfPositions] = useState([1.4, 0.9, 0.4]); 
             const [selectedShelf, setSelectedShelf] = useState(1);
             const [lightSettings, setLightSettings] = useState({ 
@@ -512,7 +542,9 @@
                 pos_top_x: 50, pos_top_y: 100, pos_top_z: 50 
             });
             const [viewMode, setViewMode] = useState('orbit');
-            const [personPos, setPersonPos] = useState({ x: 0, z: 2.0, lookY: 1.0 }); 
+            
+            // Initial 1st person perspective preset
+            const [personPos, setPersonPos] = useState({ x: 0, z: 2.2, lookY: 0.95 }); 
 
             // Automatically manage door state when shifting view mode
             useEffect(() => {
@@ -590,6 +622,11 @@
                             <p className="text-xs text-gray-400 mt-1">인체공학적 설계 검증 및 CMF 시뮬레이션</p>
                         </div>
                         <div className="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
+                             {/* ErgoSimulator moved to the top of the right panel, rendered only in firstPerson mode */}
+                             {viewMode === 'firstPerson' && (
+                                 <ErgoSimulator distance={personPos.z} lookTargetY={personPos.lookY} />
+                             )}
+                             
                              {Object.entries(designConcepts).map(([cat, items]) => {
                                  if (items.length === 0) return null; 
                                  return (
