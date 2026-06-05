@@ -92,7 +92,7 @@
 
         // --- Precise Ergonomics Constants ---
         const SCALE = 1.0; 
-        const UNITS_PER_METER = 1.0; // Added to fix ReferenceError
+        const UNITS_PER_METER = 1.0; 
         
         const REAL_SPECS = {
             fridgeHeight: 1.85, 
@@ -111,7 +111,7 @@
         const DoorOpen = (p) => <IconWrapper {...p}><path d="M13 4h3a2 2 0 0 1 2 2v14" /><path d="M2 20h3" /><path d="M13 20h9" /><path d="M10 12v.01" /><path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z" /></IconWrapper>;
         const Leaf = (p) => <IconWrapper {...p}><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.5 2 4.5a7.29 7.29 0 0 1-5.5 7.9c-2.8.9-5 1.7-6.2 3.1" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></IconWrapper>;
         const Lightbulb = (p) => <IconWrapper {...p}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2 1.5-3.5 0-2.2-1.8-4-4-4s-4 1.8-4 4c0 1.5.5 2.5 1.5 3.5.8.8 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></IconWrapper>;
-        const Box = (p) => <IconWrapper {...p}><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></IconWrapper>;
+        const Box = (p) => <IconWrapper {...p}><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" y2="12" /></IconWrapper>;
         const Thermometer = (p) => <IconWrapper {...p}><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" /></IconWrapper>;
         const Info = (p) => <IconWrapper {...p}><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></IconWrapper>;
         const ZoomIn = (p) => <IconWrapper {...p}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="11" y1="8" x2="11" y2="14" /><line x1="8" y1="11" x2="14" y2="11" /></IconWrapper>;
@@ -120,22 +120,21 @@
         const User = (p) => <IconWrapper {...p}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></IconWrapper>;
         const Ruler = (p) => <IconWrapper {...p}><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></IconWrapper>;
         const Move = (p) => <IconWrapper {...p}><polyline points="5 9 2 12 5 15" /><polyline points="9 5 12 2 15 5" /><polyline points="15 19 12 22 9 19" /><polyline points="19 15 22 12 19 9" /><line x1="2" x2="22" y1="12" y2="12" /><line x1="12" x2="12" y1="2" y2="22" /></IconWrapper>;
+        const ChevronUp = (p) => <IconWrapper {...p}><polyline points="18 15 12 9 6 15" /></IconWrapper>;
+        const ChevronDown = (p) => <IconWrapper {...p}><polyline points="6 9 12 15 18 9" /></IconWrapper>;
+        const ChevronLeft = (p) => <IconWrapper {...p}><polyline points="15 18 9 12 15 6" /></IconWrapper>;
+        const ChevronRight = (p) => <IconWrapper {...p}><polyline points="9 18 15 12 9 6" /></IconWrapper>;
 
-        // --- Data ---
+        // --- Data (Updated: Removed requested menus and features) ---
         const designConcepts = {
-            exterior: [
-                { id: 'invisible', title: 'Invisible Interface', icon: <Layers size={20} />, desc: '숨겨진 디스플레이', detail: '평소에는 스톤/메탈 질감이나 사용자가 다가오면 투과형 LED가 활성화됨.', canvasReq: '투과율 40% 이상의 글래스 소재와 결합된 UI 시나리오 작성' },
-                { id: 'autoDoor', title: 'Auto-Door System', icon: <DoorOpen size={20} />, desc: '핸들리스 & 자동 오픈', detail: '물리적 손잡이 제거, 센서 인식으로 자동 30도 오픈.', canvasReq: '오작동 방지를 위한 센서 민감도 설정 및 UX 플로우 차트 서술' },
-                { id: 'sustainable', title: 'Sustainable CMF', icon: <Leaf size={20} />, desc: '바이오 레진 & 스톤', detail: '폐플라스틱 업사이클링, 대리석 깊이감 구현.', canvasReq: '친환경 소재 스토리텔링을 포함한 마케팅용 제품 설명서 초안 작성' }
-            ],
+            exterior: [], 
             interior: [
                 { id: 'lighting', title: 'Dynamic Lighting', icon: <Lightbulb size={20} />, desc: '시어터 라이팅', detail: '식재료 색감을 살리는 고연색성 LED.', canvasReq: '도어 개폐에 따른 조명 디밍 시퀀스 묘사' },
-                { id: 'shelf', title: 'Active Shelf', icon: <Box size={20} />, desc: '높이 조절 선반', detail: '레버로 높이 조절 또는 접이식 구조.', canvasReq: '구동 방식의 메커니즘 텍스트 묘사' },
-                { id: 'zones', title: 'Specialized Zones', icon: <Thermometer size={20} />, desc: '특화 존', detail: '맞춤형 온습도 제어 서랍.', canvasReq: '각 모드별 최적 온습도 데이터 테이블 생성' }
+                { id: 'shelf', title: 'Active Shelf', icon: <Box size={20} />, desc: '높이 조절 선반', detail: '레버로 높이 조절 또는 접이식 구조.', canvasReq: '구동 방식의 메커니즘 텍스트 묘사' }
             ]
         };
 
-        // --- Updated ErgoSimulator (Fixed ReferenceError) ---
+        // --- Precise Ergonomics Simulator ---
         const ErgoSimulator = ({ distance, lookTargetY }) => {
             const width = 200;
             const height = 280;
@@ -158,9 +157,10 @@
             const hipX = fX + fD + (physicalDist * scale);
             const hipY = floorY - shinLen - thighLen;
 
+            // --- Bending Logic (Kinematics) ---
             const eyeH = REAL_SPECS.eyeLevel;
             const targetH = lookTargetY;
-            const heightDiff = eyeH - targetH;
+            const heightDiff = eyeH - targetH; 
 
             let hipAngle = 0; 
             let neckAngle = 0; 
@@ -176,7 +176,7 @@
             }
 
             const torsoRot = -hipAngle; 
-            const totalNeckBend = neckAngle; // Fixed: removed manualTilt using undefined lookY
+            const totalNeckBend = neckAngle; 
 
             const getPos = (startX, startY, len, angleDeg) => {
                 const r = (angleDeg - 90) * (Math.PI / 180); 
@@ -187,7 +187,7 @@
             };
 
             const shoulder = getPos(hipX, hipY, torsoLen, torsoRot);
-            const head = getPos(shoulder.x, shoulder.y, neckLen, torsoRot - totalNeckBend); // Fixed rotation direction for natural look
+            const head = getPos(shoulder.x, shoulder.y, neckLen, torsoRot - totalNeckBend); 
 
             const armRot = torsoRot * 0.2; 
             const elbow = getPos(shoulder.x, shoulder.y, armUpperLen, 180 + armRot); 
@@ -241,6 +241,8 @@
             const mountRef = useRef(null);
             const cameraRef = useRef(null);
             const fridgeRef = useRef(null);
+            const pivotYRef = useRef(null); // Added
+            const pivotXRef = useRef(null); // Added
             const doorGroupRef = useRef(null);
             const shelvesRef = useRef([]);
             const lightsRef = useRef({});
@@ -256,7 +258,6 @@
                         cameraRef.current.position.set(0, 2, zoom);
                         cameraRef.current.lookAt(0, 1, 0); 
                     } else if (viewMode === 'firstPerson') {
-                        const floorY = 0; 
                         cameraRef.current.position.set(personPos.x, REAL_SPECS.eyeLevel, personPos.z);
                         cameraRef.current.lookAt(0, personPos.lookY, 0); 
                     }
@@ -317,6 +318,17 @@
                     intLightGroup.add(l);
                     return l;
                 };
+                
+                // Pivot Groups for camera/object rotation
+                const pivotY = new THREE.Group();
+                scene.add(pivotY);
+                pivotYRef.current = pivotY;
+
+                const pivotX = new THREE.Group();
+                pivotY.add(pivotX);
+                pivotXRef.current = pivotX;
+                pivotX.add(fridgeGroup);
+
                 lightsRef.current.top = makeLight(0, h/2 - 0.05, 0);
                 lightsRef.current.sideLeft = makeLight(-w/2 + 0.08, 0, 0);
                 lightsRef.current.sideRight = makeLight(w/2 - 0.08, 0, 0);
@@ -359,11 +371,37 @@
                     }
                 };
                 window.addEventListener('resize', handleResize);
+
+                // Setup drag rotation
+                let isDrag = false;
+                let prevPos = { x: 0, y: 0 };
+                const onDown = () => isDrag = true;
+                const onUp = () => isDrag = false;
+                const onMove = (e) => {
+                    if(viewMode === 'firstPerson') return;
+                    if(isDrag) {
+                        const dx = e.offsetX - prevPos.x;
+                        const dy = e.offsetY - prevPos.y;
+                        pivotY.rotation.y += dx * 0.01;
+                        pivotX.rotation.x += dy * 0.01;
+                        pivotX.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, pivotX.rotation.x));
+                    }
+                    prevPos = { x: e.offsetX, y: e.offsetY };
+                };
+                mountRef.current.addEventListener('mousedown', onDown);
+                window.addEventListener('mouseup', onUp);
+                mountRef.current.addEventListener('mousemove', onMove);
+
                 return () => {
                     window.removeEventListener('resize', handleResize);
-                    if(mountRef.current) mountRef.current.removeChild(renderer.domElement);
+                    window.removeEventListener('mouseup', onUp);
+                    if(mountRef.current) {
+                        mountRef.current.removeChild(renderer.domElement);
+                        mountRef.current.removeEventListener('mousedown', onDown);
+                        mountRef.current.removeEventListener('mousemove', onMove);
+                    }
                 };
-            }, []);
+            }, [viewMode]);
 
             useEffect(() => {
                 if(!fridgeRef.current) return;
@@ -412,14 +450,47 @@
                 });
             }, [activeFeatures, lightSettings, shelfPositions, isDoorOpen]);
 
+            // Orbit view rotation helper
+            const handleRotate = (axis, amount) => {
+                if (pivotXRef.current && pivotYRef.current) {
+                    if (axis === 'y') {
+                        pivotYRef.current.rotation.y += amount;
+                    } else if (axis === 'x') {
+                        pivotXRef.current.rotation.x += amount;
+                        // Clamp X rotation to avoid flipping upside down
+                        pivotXRef.current.rotation.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, pivotXRef.current.rotation.x));
+                    }
+                }
+            };
+
             return (
                 <div ref={mountRef} className="w-full h-full relative canvas-container">
+                    {/* View Controls Overlay */}
                     {viewMode === 'orbit' && (
-                        <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-20">
-                             <button onClick={() => setZoom(z => Math.max(2, z-1))} className="bg-white/90 p-2 rounded-full shadow hover:bg-gray-100"><ZoomIn/></button>
-                             <button onClick={() => setZoom(z => Math.min(8, z+1))} className="bg-white/90 p-2 rounded-full shadow hover:bg-gray-100"><ZoomOut/></button>
+                        <div className="absolute bottom-4 right-4 flex flex-col gap-2 z-20 items-end">
+                             {/* 3D View Rotation Buttons */}
+                             <div className="bg-white/90 p-2 rounded-xl shadow-md backdrop-blur-sm grid grid-cols-3 gap-1 mb-1" onClick={(e) => e.stopPropagation()}>
+                                <div className="col-start-2">
+                                    <button onClick={() => handleRotate('x', -0.2)} className="p-1.5 hover:bg-blue-100 rounded text-gray-700" title="위로 회전"><ChevronUp size={16} /></button>
+                                </div>
+                                <div className="col-start-1 row-start-2">
+                                    <button onClick={() => handleRotate('y', -0.2)} className="p-1.5 hover:bg-blue-100 rounded text-gray-700" title="좌측 회전"><ChevronLeft size={16} /></button>
+                                </div>
+                                <div className="col-start-3 row-start-2">
+                                    <button onClick={() => handleRotate('y', 0.2)} className="p-1.5 hover:bg-blue-100 rounded text-gray-700" title="우측 회전"><ChevronRight size={16} /></button>
+                                </div>
+                                <div className="col-start-2 row-start-3">
+                                    <button onClick={() => handleRotate('x', 0.2)} className="p-1.5 hover:bg-blue-100 rounded text-gray-700" title="아래로 회전"><ChevronDown size={16} /></button>
+                                </div>
+                             </div>
+                             
+                             <div className="flex gap-2">
+                                 <button onClick={() => setZoom(z => Math.max(2, z-1))} className="bg-white/90 p-2.5 rounded-full shadow hover:bg-gray-100"><ZoomIn/></button>
+                                 <button onClick={() => setZoom(z => Math.min(8, z+1))} className="bg-white/90 p-2.5 rounded-full shadow hover:bg-gray-100"><ZoomOut/></button>
+                             </div>
                         </div>
                     )}
+                    
                     {viewMode === 'firstPerson' && (
                         <div className="absolute top-16 right-4 z-20 pointer-events-none">
                             <ErgoSimulator distance={personPos.z} lookTargetY={personPos.lookY} />
@@ -431,7 +502,7 @@
 
         const App = () => {
             const [activeFeatures, setActiveFeatures] = useState({ exterior: null, interior: null });
-            const [isDoorOpen, setIsDoorOpen] = useState(true);
+            const [isDoorOpen, setIsDoorOpen] = useState(false); // Initially closed for 3D View
             const [shelfPositions, setShelfPositions] = useState([1.4, 0.9, 0.4]); 
             const [selectedShelf, setSelectedShelf] = useState(1);
             const [lightSettings, setLightSettings] = useState({ 
@@ -442,6 +513,15 @@
             });
             const [viewMode, setViewMode] = useState('orbit');
             const [personPos, setPersonPos] = useState({ x: 0, z: 2.0, lookY: 1.0 }); 
+
+            // Automatically manage door state when shifting view mode
+            useEffect(() => {
+                if (viewMode === 'orbit') {
+                    setIsDoorOpen(false); // Refrigerator completely closed in 3D View
+                } else if (viewMode === 'firstPerson') {
+                    setIsDoorOpen(true);  // Automatically open for inspection
+                }
+            }, [viewMode]);
 
             const toggleFeature = (cat, id) => {
                 setActiveFeatures(p => ({ ...p, [cat]: p[cat] === id ? null : id }));
@@ -461,142 +541,160 @@
             return (
                 <div className="flex h-screen w-full">
                     <div className="w-2/3 h-full relative">
+                        {/* Header */}
                         <div className="absolute top-4 left-4 z-10 bg-white/90 p-3 rounded-xl shadow-sm backdrop-blur">
                             <h2 className="font-bold text-gray-800">Project Deep-Freeze</h2>
                             <p className="text-xs text-gray-500">Real Scale: 1 Unit = 1 Meter</p>
                         </div>
+                        
+                        {/* View Switch */}
                         <div className="absolute top-4 right-4 z-20 flex gap-2">
                             <button onClick={()=>setViewMode('orbit')} className={`p-2 rounded-lg text-xs font-bold flex gap-2 ${viewMode==='orbit'?'bg-blue-600 text-white':'bg-white text-gray-700'}`}><Eye size={14}/> 3D View</button>
                             <button onClick={()=>setViewMode('firstPerson')} className={`p-2 rounded-lg text-xs font-bold flex gap-2 ${viewMode==='firstPerson'?'bg-blue-600 text-white':'bg-white text-gray-700'}`}><User size={14}/> 1st Person (1.7m)</button>
                         </div>
+                        
+                        {/* 1st Person Controls */}
                         {viewMode === 'firstPerson' && (
                             <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 bg-white/90 p-4 rounded-xl shadow-lg w-80 backdrop-blur">
                                 <div className="text-xs font-bold mb-3 text-center text-blue-800 border-b pb-2 border-gray-100">Human Simulation Control</div>
                                 <div className="space-y-4">
                                     <div>
-                                        <div className="flex justify-between text-[10px] text-gray-500 mb-1"><span>가까이 (0.5m)</span><span>멀리 (3.0m)</span></div>
+                                        <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+                                            <span>가까이 (0.5m)</span>
+                                            <span>멀리 (3.0m)</span>
+                                        </div>
                                         <input type="range" min="0.5" max="3.0" step="0.1" value={personPos.z} onChange={e=>setPersonPos(p=>({...p, z:Number(e.target.value)}))} className="w-full h-1 bg-gray-300 rounded appearance-none" />
                                     </div>
                                     <div>
-                                        <div className="flex justify-between text-[10px] text-gray-500 mb-1"><span>아래 보기 (0m)</span><span className="text-blue-600 font-bold">{personPos.lookY.toFixed(1)}m</span><span>위 보기 (1.8m)</span></div>
+                                        <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+                                            <span>아래 보기 (0m)</span>
+                                            <span className="text-blue-600 font-bold">{personPos.lookY.toFixed(1)}m</span>
+                                            <span>위 보기 (1.8m)</span>
+                                        </div>
                                         <input type="range" min="0" max="1.85" step="0.05" value={personPos.lookY} onChange={e=>setPersonPos(p=>({...p, lookY:Number(e.target.value)}))} className="w-full h-1 bg-gray-300 rounded appearance-none" />
                                     </div>
                                 </div>
                             </div>
                         )}
+
                         <FridgeViewer {...{activeFeatures, isDoorOpen, toggleDoor:setIsDoorOpen, shelfPositions, selectedShelf, lightSettings, viewMode, personPos}} />
+                        
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
                             <button onClick={()=>setIsDoorOpen(!isDoorOpen)} className="px-6 py-2 rounded-full bg-gray-800 text-white shadow-lg flex items-center gap-2 font-bold text-sm hover:bg-gray-700 transition"><DoorOpen size={16}/> {isDoorOpen?'도어 닫기':'도어 열기'}</button>
                         </div>
                     </div>
+
                     <div className="w-1/3 h-full glass-panel flex flex-col overflow-hidden">
                         <div className="p-5 border-b border-gray-200 bg-white">
                             <h1 className="font-bold text-gray-800 flex items-center gap-2"><span className="bg-blue-600 text-white px-1 rounded text-sm">Ai</span> Design Canvas</h1>
                             <p className="text-xs text-gray-400 mt-1">인체공학적 설계 검증 및 CMF 시뮬레이션</p>
                         </div>
                         <div className="flex-1 overflow-y-auto custom-scroll p-5 space-y-6">
-                             {Object.entries(designConcepts).map(([cat, items]) => (
-                                 <div key={cat}>
-                                     <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{cat === 'exterior' ? 'A. 외관 (Exterior)' : 'B. 내상 (Interior)'}</h3>
-                                     <div className="space-y-3">
-                                         {items.map(item => (
-                                             <div key={item.id} onClick={()=>toggleFeature(cat, item.id)} className={`feature-card p-3 rounded-xl cursor-pointer bg-white shadow-sm border ${activeFeatures[cat]===item.id ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-500' : 'border-gray-100 hover:border-blue-300'}`}>
-                                                 <div className="flex items-center gap-3 mb-2">
-                                                     <div className={`p-2 rounded-lg ${activeFeatures[cat]===item.id?'bg-blue-100 text-blue-600':'bg-gray-100 text-gray-500'}`}>{item.icon}</div>
-                                                     <div><div className="font-bold text-sm text-gray-800">{item.title}</div><div className="text-xs text-blue-600">{item.desc}</div></div>
-                                                 </div>
-                                                 {activeFeatures[cat]===item.id && (
-                                                     <div className="mt-3 pt-3 border-t border-blue-100 space-y-3" onClick={e=>e.stopPropagation()}>
-                                                         {item.id === 'shelf' && (
-                                                             <div className="bg-white p-3 rounded border border-blue-100">
-                                                                 <div className="flex gap-1 mb-2">
-                                                                     {['상단','중단','하단'].map((n,i)=><button key={i} onClick={()=>setSelectedShelf(i)} className={`flex-1 text-xs py-1 rounded border ${selectedShelf===i?'bg-blue-600 text-white border-blue-600':'bg-gray-50 text-gray-500 border-gray-200'}`}>{n}</button>)}
-                                                                 </div>
-                                                                 <div className="flex justify-between text-[10px] text-gray-500 mb-1"><span>낮게</span><span className="font-bold text-blue-600">{Math.round(shelfPositions[selectedShelf]*1000)}mm</span><span>높게</span></div>
-                                                                 <input type="range" min="0" max="100" onChange={handleShelfMove} />
-                                                             </div>
-                                                         )}
-                                                          {item.id === 'lighting' && (
-                                                             <div className="bg-white p-3 rounded border border-yellow-100 space-y-3">
-                                                                 <div>
-                                                                     <div className="text-xs font-bold text-gray-600 mb-2">밝기 (Intensity)</div>
-                                                                     {['side', 'back', 'top'].map(k=>(
-                                                                         <div key={k} className="flex items-center gap-2 mb-1">
-                                                                             <span className="text-[10px] w-8 text-gray-500 capitalize">{k}</span>
-                                                                             <input type="range" className="flex-1" value={lightSettings[k]} onChange={e=>setLightSettings(p=>({...p, [k]:Number(e.target.value)}))} />
-                                                                         </div>
-                                                                     ))}
-                                                                 </div>
-                                                                 <div className="border-t border-dashed border-gray-200 pt-2">
-                                                                     <div className="text-xs font-bold text-gray-600 mb-2 flex items-center gap-1"><Move size={10}/> 위치 설정 (Position)</div>
-                                                                     <div className="mb-3 bg-gray-50 p-2 rounded">
-                                                                         <span className="text-[9px] text-blue-600 font-bold block mb-1">Side Light</span>
-                                                                         <div className="flex gap-2 mb-1">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">높이 (Y)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_side_y} onChange={e=>setLightSettings(p=>({...p, pos_side_y:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">너비 (X)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_side_x} onChange={e=>setLightSettings(p=>({...p, pos_side_x:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                         <div className="flex gap-2">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">깊이 (Z)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_side_z} onChange={e=>setLightSettings(p=>({...p, pos_side_z:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                     </div>
-                                                                     <div className="mb-3 bg-gray-50 p-2 rounded">
-                                                                         <span className="text-[9px] text-blue-600 font-bold block mb-1">Back Light</span>
-                                                                         <div className="flex gap-2 mb-1">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">높이 (Y)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_back_y} onChange={e=>setLightSettings(p=>({...p, pos_back_y:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">좌우 (X)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_back_x} onChange={e=>setLightSettings(p=>({...p, pos_back_x:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                         <div className="flex gap-2">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">앞뒤 (Z)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_back_z} onChange={e=>setLightSettings(p=>({...p, pos_back_z:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                     </div>
-                                                                     <div className="bg-gray-50 p-2 rounded">
-                                                                         <span className="text-[9px] text-blue-600 font-bold block mb-1">Top Light</span>
-                                                                         <div className="flex gap-2 mb-1">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">좌우 (X)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_top_x} onChange={e=>setLightSettings(p=>({...p, pos_top_x:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">높이 (Y)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_top_y} onChange={e=>setLightSettings(p=>({...p, pos_top_y:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                         <div className="flex gap-2">
-                                                                             <div className="flex-1">
-                                                                                 <span className="text-[9px] text-gray-400">앞뒤 (Z)</span>
-                                                                                 <input type="range" className="w-full h-1" value={lightSettings.pos_top_z} onChange={e=>setLightSettings(p=>({...p, pos_top_z:Number(e.target.value)}))} />
-                                                                             </div>
-                                                                         </div>
-                                                                     </div>
-                                                                 </div>
-                                                             </div>
-                                                         )}
-                                                         <div className="text-[10px] text-gray-500 bg-gray-50 p-2 rounded">💡 "{item.canvasReq}"</div>
+                             {Object.entries(designConcepts).map(([cat, items]) => {
+                                 if (items.length === 0) return null; 
+                                 return (
+                                     <div key={cat}>
+                                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{cat === 'exterior' ? 'A. 외관 (Exterior)' : 'B. 내상 (Interior)'}</h3>
+                                         <div className="space-y-3">
+                                             {items.map(item => (
+                                                 <div key={item.id} onClick={()=>toggleFeature(cat, item.id)} className={`feature-card p-3 rounded-xl cursor-pointer bg-white shadow-sm border ${activeFeatures[cat]===item.id ? 'border-blue-500 bg-blue-50 ring-1 ring-blue-500' : 'border-gray-100 hover:border-blue-300'}`}>
+                                                     <div className="flex items-center gap-3 mb-2">
+                                                         <div className={`p-2 rounded-lg ${activeFeatures[cat]===item.id?'bg-blue-100 text-blue-600':'bg-gray-100 text-gray-500'}`}>{item.icon}</div>
+                                                         <div><div className="font-bold text-sm text-gray-800">{item.title}</div><div className="text-xs text-blue-600">{item.desc}</div></div>
                                                      </div>
-                                                 )}
-                                             </div>
-                                         ))}
+                                                     {activeFeatures[cat]===item.id && (
+                                                         <div className="mt-3 pt-3 border-t border-blue-100 space-y-3" onClick={e=>e.stopPropagation()}>
+                                                             {item.id === 'shelf' && (
+                                                                 <div className="bg-white p-3 rounded border border-blue-100">
+                                                                     <div className="flex gap-1 mb-2">
+                                                                         {['상단','중단','하단'].map((n,i)=><button key={i} onClick={()=>setSelectedShelf(i)} className={`flex-1 text-xs py-1 rounded border ${selectedShelf===i?'bg-blue-600 text-white border-blue-600':'bg-gray-50 text-gray-500 border-gray-200'}`}>{n}</button>)}
+                                                                     </div>
+                                                                     <div className="flex justify-between text-[10px] text-gray-500 mb-1"><span>낮게</span><span className="font-bold text-blue-600">{Math.round(shelfPositions[selectedShelf]*1000)}mm</span><span>높게</span></div>
+                                                                     <input type="range" min="0" max="100" onChange={handleShelfMove} />
+                                                                 </div>
+                                                             )}
+                                                              {item.id === 'lighting' && (
+                                                                 <div className="bg-white p-3 rounded border border-yellow-100 space-y-3">
+                                                                     <div>
+                                                                         <div className="text-xs font-bold text-gray-600 mb-2">밝기 (Intensity)</div>
+                                                                         {['side', 'back', 'top'].map(k=>(
+                                                                             <div key={k} className="flex items-center gap-2 mb-1">
+                                                                                 <span className="text-[10px] w-8 text-gray-500 capitalize">{k}</span>
+                                                                                 <input type="range" className="flex-1" value={lightSettings[k]} onChange={e=>setLightSettings(p=>({...p, [k]:Number(e.target.value)}))} />
+                                                                             </div>
+                                                                         ))}
+                                                                     </div>
+                                                                     <div className="border-t border-dashed border-gray-200 pt-2">
+                                                                         <div className="text-xs font-bold text-gray-600 mb-2 flex items-center gap-1"><Move size={10}/> 위치 설정 (Position)</div>
+                                                                         <div className="mb-3 bg-gray-50 p-2 rounded">
+                                                                             <span className="text-[9px] text-blue-600 font-bold block mb-1">Side Light</span>
+                                                                             <div className="flex gap-2 mb-1">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">높이 (Y)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_side_y} onChange={e=>setLightSettings(p=>({...p, pos_side_y:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">너비 (X)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_side_x} onChange={e=>setLightSettings(p=>({...p, pos_side_x:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                             <div className="flex gap-2">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">깊이 (Z)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_side_z} onChange={e=>setLightSettings(p=>({...p, pos_side_z:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div className="mb-3 bg-gray-50 p-2 rounded">
+                                                                             <span className="text-[9px] text-blue-600 font-bold block mb-1">Back Light</span>
+                                                                             <div className="flex gap-2 mb-1">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">높이 (Y)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_back_y} onChange={e=>setLightSettings(p=>({...p, pos_back_y:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">좌우 (X)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_back_x} onChange={e=>setLightSettings(p=>({...p, pos_back_x:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                             <div className="flex gap-2">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">앞뒤 (Z)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_back_z} onChange={e=>setLightSettings(p=>({...p, pos_back_z:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div className="bg-gray-50 p-2 rounded">
+                                                                             <span className="text-[9px] text-blue-600 font-bold block mb-1">Top Light</span>
+                                                                             <div className="flex gap-2 mb-1">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">좌우 (X)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_top_x} onChange={e=>setLightSettings(p=>({...p, pos_top_x:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">높이 (Y)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_top_y} onChange={e=>setLightSettings(p=>({...p, pos_top_y:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                             <div className="flex gap-2">
+                                                                                 <div className="flex-1">
+                                                                                     <span className="text-[9px] text-gray-400">앞뒤 (Z)</span>
+                                                                                     <input type="range" className="w-full h-1" value={lightSettings.pos_top_z} onChange={e=>setLightSettings(p=>({...p, pos_top_z:Number(e.target.value)}))} />
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                             )}
+                                                             <div className="text-[10px] text-gray-500 bg-gray-50 p-2 rounded">💡 "{item.canvasReq}"</div>
+                                                         </div>
+                                                     )}
+                                                 </div>
+                                             ))}
+                                         </div>
                                      </div>
-                                 </div>
-                             ))}
+                                 );
+                             })}
                         </div>
                     </div>
                 </div>
