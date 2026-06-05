@@ -136,6 +136,7 @@
 
         // --- Precise Ergonomics Simulator ---
         const ErgoSimulator = ({ distance, lookTargetY }) => {
+            // 상하 및 우측 여백을 줄이기 위해 최적화된 치수
             const width = 290;  
             const height = 210; 
             const floorY = 190; 
@@ -284,16 +285,6 @@
                 const width = mountRef.current.clientWidth;
                 const height = mountRef.current.clientHeight;
                 const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-                
-                // 첫 로드 시 카메라 초기 상태 강제 적용
-                if (viewMode === 'orbit') {
-                    camera.position.set(0, 2, zoom);
-                    camera.lookAt(0, 1, 0); 
-                } else if (viewMode === 'firstPerson') {
-                    camera.position.set(personPos.x, REAL_SPECS.eyeLevel, personPos.z);
-                    camera.lookAt(0, personPos.lookY, 0); 
-                }
-                
                 cameraRef.current = camera;
                 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
                 renderer.setSize(width, height);
