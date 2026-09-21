@@ -255,7 +255,7 @@ const LAMP0=o=>Object.assign({on:false,x:0,y:1.30,z:-0.10,flux:120,cct:5000,beam
 
 const S={
   selHi:false,
-  doorOpen:100,doorTarget:0,doorAngle:0,
+  doorOpen:125,doorTarget:0,doorAngle:0,
   ambient:65,finish:'steel',liner:'white',
   heat:false,cone:false,indirect:true,
   shelves:[],sel:0,shelfType:'glass',
@@ -885,7 +885,7 @@ $('#panel').innerHTML=
 </section>
 <section class="detail">
   <h2>문과 표시</h2>
-  ${rng('door','문 열림 각도',0,120,1)}
+  ${rng('door','문 열림 각도',0,125,1)}
   ${rng('amb','주방 조명 밝기',0,100,1)}
   <div class="togs">${tog('heat','조도 히트맵')}${tog('cone','램프 배광 범위')}</div>
   <h3>외관 마감</h3>${chips('finish',FINISH)}
@@ -1035,7 +1035,7 @@ $('#frontBtn').addEventListener('click',()=>{
   ['pyaw','ptwist','poff','ptilt'].forEach(syncRange);refreshPerson();
 });
 $('#doorBtn').addEventListener('click',()=>{
-  if(S.doorTarget>0)S.doorTarget=0;else{if(S.doorOpen<5)S.doorOpen=100;S.doorTarget=S.doorOpen;}
+  if(S.doorTarget>0)S.doorTarget=0;else{if(S.doorOpen<5)S.doorOpen=125;S.doorTarget=S.doorOpen;}
   syncRange('door');updateStatus();refreshPerson();
 });
 
